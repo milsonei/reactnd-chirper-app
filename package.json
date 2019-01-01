@@ -1,0 +1,33 @@
+{
+  "name": "chirper",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "flow-bin": "^0.89.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-icons": "^3.2.2",
+    "react-redux": "^6.0.0",
+    "react-redux-loading": "^1.0.1",
+    "react-scripts": "^2.1.2",
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/udacity/reactnd-chirper-app.git"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
