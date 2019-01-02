@@ -1,6 +1,6 @@
-import React,  { Component } from 'react';
-import { connect } from 'react-redux';
-import Tweet from './Tweet';
+import React,  { Component } from 'react'
+import { connect } from 'react-redux'
+import Tweet from './Tweet'
 
 class Dashboard extends Component {    
     render(){        
@@ -27,4 +27,4 @@ function mapStateToProps({ tweets }){
     }
 }
 
-export default connect(mapStateToProps)(Dashboard);
+export default connect(mapStateToProps)(Dashboard)
