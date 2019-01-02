@@ -1,19 +1,28 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { formatTweet, formatDate } from '../utils/helpers'
-import { TiArrowBackOutline, TiHeartOutline, TiHeartFullOutline } from 'react-icons/ti';
+import { TiArrowBackOutline, TiHeartOutline, TiHeartFullOutline } from 'react-icons/ti'
+import { handleToggleTweet } from '../actions/tweets'
+import { Link, withRouter } from 'react-router-dom'
 
 class Tweet extends Component {
-    toParent = (e,id) => {
-        e.preventDefault();
-        //todo: Redirect to parent Tweet
+    toParent = (e, id) => {
+        e.preventDefault()
+        this.props.history.push(`/tweet/${id}`)
     }
     handleLike = (e) => {
-        e.preventDefault();
-       //todo: Handle Like Tweet
+        e.preventDefault()
+
+        const { dispatch, tweet, authedUser } = this.props
+
+        dispatch(handleToggleTweet({
+            id: tweet.id,
+            hasLiked: tweet.hasLiked,
+            authedUser
+        }))
     }
     render(){
-        const { tweet } = this.props;
+        const { tweet } = this.props
         if (tweet === null){
             return <p>This Tweet doesn't exists</p>
         }
@@ -25,11 +34,12 @@ class Tweet extends Component {
             hasLiked,
             likes,
             replies,
+            id,
             parent
-        } = tweet;
+        } = tweet
 
         return (
-            <div className='tweet'>
+            <Link to={`/tweet/${id}`} className='tweet'>
                 <img src={avatar}
                      alt={`Avatar if ${name}`}
                      className='avatar'
@@ -59,14 +69,14 @@ class Tweet extends Component {
                         <span>{likes !== 0 && likes}</span>
                     </div>
                 </div>
-            </div>
+            </Link>
         )
     }
 }
 
 function mapStateToProps({ authedUser, users, tweets }, { id }) {
-    const tweet = tweets[id];
-    const parentTweet = tweet ? tweets[tweet.replyingTo] : null;
+    const tweet = tweets[id]
+    const parentTweet = tweet ? tweets[tweet.replyingTo] : null
     return {
         authedUser,
         tweet: tweet
@@ -75,4 +85,11 @@ function mapStateToProps({ authedUser, users, tweets }, { id }) {
     }
 }
 
-export default connect(mapStateToProps)(Tweet);
+/**
+ * O problema é que o componente Tweet não está sendo renderizado pelo React Router, então o this.props.history não está sendo passado para o componente Tweet.
+ * Então podemos importar o componente withRouter.
+ * Agora nós vamos exportar e empacotar tudo no withRouter.
+ * Isso vai passar nosso componente connect, que vai passar ao componente Tweet todas as router props, o que vai permitir fazer este this.props.history.push
+ */
+
+export default withRouter(connect(mapStateToProps)(Tweet))
